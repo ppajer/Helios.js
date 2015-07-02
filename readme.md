@@ -11,7 +11,19 @@ Helios allows you to track visitors on multiple websites in a single Analytics p
 ---
 ###Basic event tracking
 By default (that is if you only use one UA code), Helios works like any other Analytics plugin for Wordpress. It sends pageview data to your property on page load and can be extended with event tracking to track user actions on your site.
-The beauty of it all is that the only difference between working a single property and working with thousands of them is the number of UA codes you specify in the Wordpress dashboard.
+####Setup
+To start tracking your visitors with Helios, all you need is a JSON manifest of the Google Analytics properties you want to send data to. Simply call `Helios.init()` passing your configuration object as parameter. A basic configuration object looks like this:
+```javascript
+{
+    "primary"   : "UA-XXXXX-XX",    //A UA code string
+    "secondary" : [                 //An array containing any amount of valid UA code strings
+        "UA-YYYYY-YY",
+        "UA-ZZZZZ-ZZ"
+    ],
+    "events"    : []                //An array of event objects. Refer to the Custom events section.
+}
+```
+Here, Helios will send your data to the properties marked by all  
 ####Custom events
 The settings pane for Helios in the Wordpress admin area allows you to create custom event tracker objects to
 Setting up events to track is simple with Helios's  JSON interface for creating event trackers. An event tracker object is defined using the following basic markup:
@@ -25,7 +37,36 @@ Setting up events to track is simple with Helios's  JSON interface for creating 
 }
 ```
 To make changes to the events tracked by Helios on the fly, you can create any number of arbitrary event objects and simply push these values to the `Helios.events` array and call `Helios.trackEvents()` .
+####Complete example
+Putting it all together, here is a sample snippet that initializes Helios with multiple UA properties and some custom events:
+```javascript
+var config = {
+    "primary"   : "UA-XXXXX-XX",
+    "secondary" : [
+        "UA-YYYYY-YY",
+        "UA-ZZZZZ-ZZ"
+    ],
+    "events"    : [
+        {
+            "selector"  : "#example-id",
+            "category"  : "example_cat",
+            "action"    : "example_action",
+            "label"     : "example_label",
+            "value"     : 0   
+        },
+        {
+            "selector"  : "#another-id",
+            "category"  : "another_cat",
+            "action"    : "another_action",
+            "label"     : "another_label",
+            "value"     : 10   
+        }
+    ]
+};
 
+Helios.init(config);
+```
+From here, Helios will take care of injecting all the necessary APIs into the page, creating the trackers for all UA properties listed and listen to clicks on the specified selectors, sending the event data specified in the event objects to all linked properties. Forget about tracking code scattered all over the page and inside event handlers, just specify your tracking needs and Helios will gather all the necessary data for you.
 ##Track your AdWords conversions
 ---
 
