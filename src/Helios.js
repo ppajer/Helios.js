@@ -1,31 +1,36 @@
-(function() {
+(function () {
 	"use strict";
-	window.Helios 					= window.Helios 				|| {};
-	window.Helios.trackers 			= window.Helios.trackers 		|| [];
-	window.Helios.primary 			= window.Helios.primary 		|| '';
-	window.Helios.secondary 		= window.Helios.secondary 		|| [];
-	window.Helios.events 			= window.Helios.events 			|| [];
-	window.Helios.adwordsTracking 	= window.Helios.adwordsTracking || [];
-	window.Helios.adwordsOptions 	= window.Helios.adwordsOptions 	|| {};
-	window.Helios.current 			= window.Helios.current 		|| "A";
-	window.Helios.pauseFlag 		= false;
+	window.Helios                  = window.Helios                 || {};
+	window.Helios.trackers         = window.Helios.trackers        || [];
+	window.Helios.primary          = window.Helios.primary         || '';
+	window.Helios.secondary        = window.Helios.secondary       || [];
+	window.Helios.events           = window.Helios.events          || [];
+	window.Helios.adwordsTracking  = window.Helios.adwordsTracking || [];
+	window.Helios.adwordsOptions   = window.Helios.adwordsOptions  || {};
+	window.Helios.current          = window.Helios.current         || "A";
+	window.Helios.pauseFlag        = false;
 
 	//Setup
-	window.Helios.init = function(config) {
+	window.Helios.init = function (config) {
 
 		if (!window.jQuery) {
 			throw new Error('Helios requires jQuery. Please include the jQuery library before calling Helios.init()!');
 		}
 
-		var primary 		= config.primary,
-			secondary 		= config.secondary,
-			events 			= config.events,
-			adwordsOptions 	= config.adwordsOptions,
-			adwordsTracking = config.adwordsTracking;
+		var primary          = config.primary,
+			secondary        = config.secondary,
+			events           = config.events,
+			adwordsOptions   = config.adwordsOptions,
+			adwordsTracking  = config.adwordsTracking,
+            youtubeTracking  = config.youtubeTracking || false;
 
 		this.injectAnalytics();
-		if (adwordsTracking) this.injectAdwords();
-		if (youtubeTracking) this.injectYoutube();
+		if (adwordsTracking) {
+            this.injectAdwords();
+        }
+		if (youtubeTracking) {
+            this.injectYoutube();
+        }
 
 		this.primary 			= primary;
 		this.secondary 			= ((typeof secondary !== 'object') 			|| (!secondary.length)) 			? undefined : secondary;
@@ -188,7 +193,7 @@
 				events: {
 					'onStateChange': window.Helios.onPlayerStateChange
 				}
-			}
+			});
 		}
     }
 })();
