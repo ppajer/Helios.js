@@ -21,9 +21,8 @@ To start tracking your visitors with Helios, all you need is a JSON manifest of 
     "events"    : []                //An array of event objects. Refer to the Custom events section.
 }
 ```
-Here, Helios will send your data to the properties marked by all  
+Here, Helios will send your data to the properties marked by all UA codes listed above.
 ####Custom events
-The settings pane for Helios in the Wordpress admin area allows you to create custom event tracker objects to
 Setting up events to track is simple with Helios's  JSON interface for creating event trackers. An event tracker object is defined using the following basic markup:
 ```javascript
 {
