@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Helios.js by ppajer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Helios.js</h1>
+      <h2 class="project-tagline">Google Analytics reporting to multiple properties made easy.</h2>
+      <a href="https://github.com/ppajer/Helios.js" class="btn">View on GitHub</a>
+      <a href="https://github.com/ppajer/Helios.js/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/ppajer/Helios.js/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="v02" class="anchor" href="#v02" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>v0.2</h1>
+
+<hr>
+
+<h2>
+<a id="simple-google-analytics-tracking-for-any-website" class="anchor" href="#simple-google-analytics-tracking-for-any-website" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Simple Google Analytics tracking for any website</h2>
+
+<p>Helios.js enables you to implement <a href="http://www.optimizesmart.com/implementing-rollup-reporting-google-universal-analytics/">rollup analytics reporting</a> on your websites to create meaningful statistics for your brand, company, or every-other-weekend hobby project on a new level.</p>
+
+<h2>
+<a id="track-all-your-properties-at-once" class="anchor" href="#track-all-your-properties-at-once" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Track all your properties at once</h2>
+
+<p>Helios.js allows you to track visitors on multiple websites in a single Analytics property as well as their respective properties, including pageviews, events and conversions. Helios.js supports an unlimited amount of Universal Analytics properties for sending visitor data to out of the box, without unnecessary configuration.</p>
+
+<h2>
+<a id="send-events-to-multiple-properties" class="anchor" href="#send-events-to-multiple-properties" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Send events to multiple properties</h2>
+
+<hr>
+
+<h4>
+<a id="setup" class="anchor" href="#setup" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Setup</h4>
+
+<p>To start tracking your visitors with Helios, all you need is a JSON manifest of the Google Analytics properties you want to send data to. Simply call <code>Helios.init()</code> passing your configuration object as parameter. A basic configuration object looks like this:</p>
+
+<div class="highlight highlight-source-js"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>primary<span class="pl-pds">"</span></span>   <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>UA-XXXXX-XX<span class="pl-pds">"</span></span>,    <span class="pl-c">//A UA code string</span>
+    <span class="pl-s"><span class="pl-pds">"</span>secondary<span class="pl-pds">"</span></span> <span class="pl-k">:</span> [                 <span class="pl-c">//An array containing any amount of valid UA code strings</span>
+        <span class="pl-s"><span class="pl-pds">"</span>UA-YYYYY-YY<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>UA-ZZZZZ-ZZ<span class="pl-pds">"</span></span>
+    ],
+    <span class="pl-s"><span class="pl-pds">"</span>events<span class="pl-pds">"</span></span>    <span class="pl-k">:</span> []                <span class="pl-c">//An array of event objects. Refer to the Custom events section.</span>
+}</pre></div>
+
+<p>Here, Helios will send your data to the properties marked by all UA codes listed above.</p>
+
+<h4>
+<a id="custom-events" class="anchor" href="#custom-events" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Custom events</h4>
+
+<p>Setting up events to track is simple with Helios's  JSON interface for creating event trackers. An event tracker object is defined using the following basic markup:</p>
+
+<div class="highlight highlight-source-js"><pre>{
+    <span class="pl-s"><span class="pl-pds">"</span>selector<span class="pl-pds">"</span></span>  <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>#example-id<span class="pl-pds">"</span></span>,    <span class="pl-c">//A CSS selector to be used as the event's trigger (string)</span>
+    <span class="pl-s"><span class="pl-pds">"</span>category<span class="pl-pds">"</span></span>  <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>example_cat<span class="pl-pds">"</span></span>,    <span class="pl-c">//A category name under which the event will appear in GA (string)</span>
+    <span class="pl-s"><span class="pl-pds">"</span>action<span class="pl-pds">"</span></span>    <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>example_action<span class="pl-pds">"</span></span>, <span class="pl-c">//An action name under which the event will appear in GA (string)</span>
+    <span class="pl-s"><span class="pl-pds">"</span>label<span class="pl-pds">"</span></span>     <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>example_label<span class="pl-pds">"</span></span>,  <span class="pl-c">//A label under which the event will appear in GA (string)</span>
+    <span class="pl-s"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span>     <span class="pl-k">:</span> <span class="pl-c1">0</span>                 <span class="pl-c">//The value associated with the event in GA (int)</span>
+}</pre></div>
+
+<p>To make changes to the events tracked by Helios on the fly, you can create any number of arbitrary event objects and simply push these values to the <code>Helios.events</code> array and call <code>Helios.trackEvents()</code> .</p>
+
+<h4>
+<a id="complete-example" class="anchor" href="#complete-example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Complete example</h4>
+
+<p>Putting it all together, here is a sample snippet that initializes Helios with multiple UA properties and some custom events:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> config <span class="pl-k">=</span> {
+    <span class="pl-s"><span class="pl-pds">"</span>primary<span class="pl-pds">"</span></span>   <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>UA-XXXXX-XX<span class="pl-pds">"</span></span>,
+    <span class="pl-s"><span class="pl-pds">"</span>secondary<span class="pl-pds">"</span></span> <span class="pl-k">:</span> [
+        <span class="pl-s"><span class="pl-pds">"</span>UA-YYYYY-YY<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>UA-ZZZZZ-ZZ<span class="pl-pds">"</span></span>
+    ],
+    <span class="pl-s"><span class="pl-pds">"</span>events<span class="pl-pds">"</span></span>    <span class="pl-k">:</span> [
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>selector<span class="pl-pds">"</span></span>  <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>#example-id<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>category<span class="pl-pds">"</span></span>  <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>example_cat<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>action<span class="pl-pds">"</span></span>    <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>example_action<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>label<span class="pl-pds">"</span></span>     <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>example_label<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span>     <span class="pl-k">:</span> <span class="pl-c1">0</span>   
+        },
+        {
+            <span class="pl-s"><span class="pl-pds">"</span>selector<span class="pl-pds">"</span></span>  <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>#another-id<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>category<span class="pl-pds">"</span></span>  <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>another_cat<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>action<span class="pl-pds">"</span></span>    <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>another_action<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>label<span class="pl-pds">"</span></span>     <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>another_label<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>value<span class="pl-pds">"</span></span>     <span class="pl-k">:</span> <span class="pl-c1">10</span>   
+        }
+    ]
+};
+
+<span class="pl-smi">Helios</span>.<span class="pl-en">init</span>(config);</pre></div>
+
+<p>From here, Helios will take care of injecting all the necessary APIs into the page, creating the trackers for all UA properties listed and listen to clicks on the specified selectors, sending the event data specified in the event objects to all linked properties. Forget about tracking code scattered all over the page and inside event handlers, just specify your tracking needs and Helios will gather all the necessary data for you.</p>
+
+<h2>
+<a id="track-your-adwords-conversions" class="anchor" href="#track-your-adwords-conversions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Track your AdWords conversions</h2>
+
+<hr>
+
+<p><em>Coming soon...</em></p>
+
+<hr>
+
+<h2>
+<a id="track-your-youtube-videos" class="anchor" href="#track-your-youtube-videos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Track your YouTube videos</h2>
+
+<p><em>Coming soon...</em></p>
+
+<hr>
+
+<h3>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API</h3>
+
+<p>Helios provides wrappers for the Universal Analytics API as well as methods of controlling the way events are sent to your different properties on the fly. There is no unnecessarily complicated API to learn here, just the same old methods you are used to when working with Analytics events with some added sugar.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">Helios</span>.<span class="pl-en">sendEvent</span>(category, action, label, value)</pre></div>
+
+<p>The <code>sendEvent()</code> method is a wrapper for <code>ga('send', 'event', ...)</code> and takes the same order of parameters. It sends the same event data to all linked properties in real time.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">Helios</span>.<span class="pl-en">sendPageview</span>()</pre></div>
+
+<p>The <code>sendPageview()</code> method is a wrapper for <code>ga('send', 'pageview')</code> and takes no additional parameters.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/ppajer/Helios.js">Helios.js</a> is maintained by <a href="https://github.com/ppajer">ppajer</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
