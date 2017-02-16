@@ -1,14 +1,15 @@
 (function () {
 	"use strict";
-	window.Helios                  = window.Helios                 || {};
-	window.Helios.trackers         = window.Helios.trackers        || [];
-	window.Helios.primary          = window.Helios.primary         || '';
-	window.Helios.secondary        = window.Helios.secondary       || [];
-	window.Helios.events           = window.Helios.events          || [];
-	window.Helios.adwordsTracking  = window.Helios.adwordsTracking || [];
-	window.Helios.adwordsOptions   = window.Helios.adwordsOptions  || {};
-	window.Helios.current          = window.Helios.current         || "A";
-	window.Helios.pauseFlag        = false;
+	window.Helios                  	= window.Helios                 || {};
+	window.Helios.trackers         	= window.Helios.trackers        || [];
+	window.Helios.primary          	= window.Helios.primary         || '';
+	window.Helios.secondary        	= window.Helios.secondary       || [];
+	window.Helios.events           	= window.Helios.events          || [];
+	window.Helios.adwordsTracking  	= window.Helios.adwordsTracking || [];
+	window.Helios.adwordsOptions   	= window.Helios.adwordsOptions  || {};
+	window.Helios.current          	= window.Helios.current         || "A";
+	window.Helios.bounceTimeout		= window.Helios.bounceTimeout	|| false;
+	window.Helios.pauseFlag        	= false;
 
 	//Setup
 	window.Helios.init = function (config) {
@@ -17,31 +18,42 @@
 			throw new Error('Helios requires jQuery. Please include the jQuery library before calling Helios.init()!');
 		}
 
-		var primary          = config.primary,
-			secondary        = config.secondary,
-			events           = config.events,
-			adwordsOptions   = config.adwordsOptions,
-			adwordsTracking  = config.adwordsTracking,
-            youtubeTracking  = config.youtubeTracking || false;
-
-		this.injectAnalytics();
-		if (adwordsTracking) {
-            this.injectAdwords();
-        }
-		if (youtubeTracking) {
-            this.injectYoutube();
-        }
-
+		var primary          	= config.primary,
+			secondary        	= config.secondary,
+			events           	= config.events,
+			adwordsOptions   	= config.adwordsOptions,
+			adwordsTracking  	= config.adwordsTracking,
+            youtubeTracking  	= config.youtubeTracking || false,
+			bounceTimeout		= config.bounceTimeout || false;
+		
 		this.primary 			= primary;
 		this.secondary 			= ((typeof secondary !== 'object') 			|| (!secondary.length)) 			? undefined : secondary;
 		this.events 			= ((typeof events !== 'object') 			|| (!events.length))				? undefined : events;
 		this.adwordsTracking 	= ((typeof adwordsTracking !== 'object') 	|| (adwordsTracking == undefined)) 	? undefined : adwordsTracking;
 		this.adwordsOptions 	= ((typeof adwordsOptions !== 'object') 	|| (adwordsOptions == undefined)) 	? undefined : adwordsOptions;
 
+		this.injectAnalytics();
 		this.createTrackers();
 		this.sendPageview();
-		if (this.events !== undefined) this.trackEvents();
-		if ((this.adwordsOptions !== undefined) && (this.adwordsTracking !== undefined)) this.trackAdwords();
+		
+		if (adwordsTracking) {
+            this.injectAdwords();
+        }
+		if (youtubeTracking) {
+            this.injectYoutube();
+        }
+				
+		if (this.events !== undefined) {
+			this.trackEvents();
+		}
+		
+		if ((this.adwordsOptions !== undefined) && (this.adwordsTracking !== undefined)) {
+			this.trackAdwords();
+		}
+		
+		if (bounceTimeout) {
+			this.setBounceTimeout(bounceTimeout);
+		}	
 	}
 
 	window.Helios.createTrackers = function() {
@@ -107,6 +119,15 @@
 			console.log(this.trackers[i]+'.send'+' = '+this.secondary[i]);
 		};
 	};
+	
+	window.Helios.setBounceTimeout = function(timeout) {
+		var timeout = timeout || windows.Helios.bounceTimeout;	
+		setTimeout(this.unbounceVisitor.bind(this), timeout);
+	}
+	
+	window.Helios.unbounceVisitor = function() {
+		this.sendEvent('Visit', 'Profitable visit', 'Non-bounce visit', 0);
+	}
 
 	//Utility
 	window.Helios.nameTracker = function() {
