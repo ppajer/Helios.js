@@ -8,7 +8,7 @@ function Helios(config) {
 	
 	// Config vars
 	this.properties = config.properties;
-	this.events 	= !!config.events 		? config.events 	|| false;
+	this.events 	= !!config.events 	? config.events 	|| false;
 	this.bounceTime = !!config.bounceTime 	? config.bounceTime || false;
 	
 	// Internals
@@ -61,8 +61,9 @@ Helios.prototype.trackEvents = function() {
 	
 Helios.prototype.trackEvent = function(eventObj) {
 	
-	var selector 	= eventObj.selector,
-		eventType 	= !!eventObj.type ? eventObj.type : 'click';
+	var 
+	selector	= eventObj.selector,
+	eventType 	= !!eventObj.type ? eventObj.type : 'click';
 	
 	this.bindEvent(selector, eventType, function() {
 		this.sendEvent(eventObj);
@@ -133,10 +134,11 @@ Helios.prototype.gaPageView = function(tracker) {
 
 Helios.prototype.gaEvent = function(tracker, eventObj) {
 	
-	var category 	= !!eventObj.category 	? eventObj.category : 'Helios_default_event',
-		action		= !!eventObj.action 	? eventObj.action 	: 'Helios_default_action',
-		label 		= !!eventObj.label 		? eventObj.label 	: 'Helios_default_label',
-		value 		= !!eventObj.value 		? eventObj.value 	: 0;
+	var 
+	category 	= !!eventObj.category 	? eventObj.category 	: 'Helios_default_event',
+	action		= !!eventObj.action 	? eventObj.action 	: 'Helios_default_action',
+	label 		= !!eventObj.label 	? eventObj.label 	: 'Helios_default_label',
+	value 		= !!eventObj.value 	? eventObj.value 	: 0;
 	
 	ga(tracker+'.send', 'event', category, action, label, value);
 };
