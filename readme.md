@@ -1,15 +1,15 @@
-#Helios.js - v0.2
+# Helios.js - v0.2
 ---
 Google Analytics rollup reporting made easy. 
-##Simple Google Analytics tracking for any website
+## Simple Google Analytics tracking for any website
 
 Helios.js enables you to implement [rollup analytics reporting](http://www.optimizesmart.com/implementing-rollup-reporting-google-universal-analytics/) on your websites to create meaningful statistics for your brand, company, or every-other-weekend hobby project on a new level.
-##Track all your properties at once
+## Track all your properties at once
 
 Helios.js allows you to track visitors on multiple websites in a single Analytics property as well as their respective properties, including pageviews, events and conversions. Helios.js supports an unlimited amount of Universal Analytics properties for sending visitor data to out of the box, without unnecessary configuration.
-##Send events to multiple properties
+## Send events to multiple properties
 ---
-####Setup
+#### Setup
 To start tracking your visitors with Helios, all you need is a JSON manifest of the Google Analytics properties you want to send data to. Simply call `Helios.init()` passing your configuration object as parameter. A basic configuration object looks like this:
 ```javascript
 {
@@ -22,7 +22,7 @@ To start tracking your visitors with Helios, all you need is a JSON manifest of 
 }
 ```
 Here, Helios will send your data to the properties marked by all UA codes listed above.
-####Custom events
+#### Custom events
 Setting up events to track is simple with Helios's  JSON interface for creating event trackers. An event tracker object is defined using the following basic markup:
 ```javascript
 {
@@ -34,7 +34,7 @@ Setting up events to track is simple with Helios's  JSON interface for creating 
 }
 ```
 To make changes to the events tracked by Helios on the fly, you can create any number of arbitrary event objects and simply push these values to the `Helios.events` array and call `Helios.trackEvents()` .
-####Complete example
+#### Complete example
 Putting it all together, here is a sample snippet that initializes Helios with multiple UA properties and some custom events:
 ```javascript
 var config = {
@@ -64,10 +64,11 @@ var config = {
 Helios.init(config);
 ```
 From here, Helios will take care of injecting all the necessary APIs into the page, creating the trackers for all UA properties listed and listen to clicks on the specified selectors, sending the event data specified in the event objects to all linked properties. Forget about tracking code scattered all over the page and inside event handlers, just specify your tracking needs and Helios will gather all the necessary data for you.
-##Track your AdWords conversions
+## Track your AdWords conversions
 ---
 *Coming soon...*
-##Track your YouTube videos
+## Track your YouTube videos
+---
 *Coming soon...*
 ### API
 Helios provides wrappers for the Universal Analytics API as well as methods of controlling the way events are sent to your different properties on the fly. There is no unnecessarily complicated API to learn here, just the same old methods you are used to when working with Analytics events with some added sugar.
